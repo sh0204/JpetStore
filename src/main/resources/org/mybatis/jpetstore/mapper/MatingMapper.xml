@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mybatis.jpetstore.mapper.MatingMapper">
+
+  <select id="getMating" resultType="Mating">
+    SELECT matingid, title, type, username, species, sex, age, content, path
+    FROM mating
+    WHERE matingId = #{matingId}
+  </select>
+
+
+  <select id="getMatingList" resultType="Mating">
+    SELECT matingId,title, type, username, species, sex, age, content
+    FROM mating
+    WHERE type = #{type}
+    ORDER BY matingId DESC
+  </select>
+
+  <insert id="insertMating" parameterType="Mating">
+    INSERT INTO mating (title, type, username, species, sex, age, content)
+    VALUES (#{title}, #{type}, #{username}, #{species}, #{sex}, #{age}, #{content})
+  </insert>
+
+  <delete id="delMating">
+    DELETE
+    FROM mating
+    WHERE matingId = #{matingId}
+  </delete>
+
+  <update id="editMating" parameterType="Mating">
+    UPDATE mating SET title = #{title}, type = #{type}, species = #{species}, sex = #{sex}, age = #{age}, content = #{content}
+    WHERE matingId = #{matingId}
+  </update>
+
+  <insert id="insertPath" parameterType="Mating">
+    UPDATE mating
+    SET path = (#{path})
+    where matingId = #{matingId};
+  </insert>
+
+  <select id="matingLastInsert" resultType="int">
+    SELECT last_insert_id(matingId) as idx FROM mating ORDER BY idx DESC LIMIT 1;
+  </select>
+
+</mapper>
